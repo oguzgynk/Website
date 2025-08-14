@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YKS Asistanım - Akıllı YKS Hazırlık Uygulaması</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: #1c1b1f;
+            overflow-x: hidden;
+            background: #f8f3ff;
+        }
+
+        .hero {
+            background: linear-gradient(145deg, #6750a4 0%, #7c4dff 50%, #9c27b0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-50px, -50px) rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .app-logo {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 2rem;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.3);
+            animation: logoFloat 4s ease-in-out infinite;
+            background: linear-gradient(135deg, #4c82f7 0%, #b74af7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .app-logo::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            background: linear-gradient(45deg, #00d4ff, #9c27b0);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-logo svg {
+            width: 80px;
+            height: 80px;
+            z-index: 1;
+            position: relative;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #00e676 0%, #00c853 100%);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 28px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 8px 32px rgba(0,230,118,0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideInUp 1s ease-out 0.4s both;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 16px 48px rgba(0,230,118,0.6);
+        }
+
+        .features {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, #f8f3ff 0%, #ffffff 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #6750a4 0%, #9c27b0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #6b7280;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px rgba(103,80,164,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(103,80,164,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6750a4 0%, #9c27b0 100%);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 16px 48px rgba(103,80,164,0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #e8eaff 0%, #f3e5f5 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: #6750a4;
+        }
+
+        .feature-card h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1c1b1f;
+        }
+
+        .feature-card p {
+            color: #49454f;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .countdown-section {
+            background: linear-gradient(135deg, #6750a4 0%, #9c27b0 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .countdown-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-display {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin: 2rem 0;
+            text-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #ffffff 0%, #e1bee7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .app-preview {
+            padding: 6rem 2rem;
+            background: #ffffff;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 2rem auto 0;
+        }
+
+        .phone-mockup {
+            background: linear-gradient(145deg, #6750a4 0%, #9c27b0 100%);
+            padding: 2rem;
+            border-radius: 32px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 16px 48px rgba(103,80,164,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #6750a4, #9c27b0, #6750a4);
+            border-radius: 34px;
+            z-index: -1;
+        }
+
+        .phone-mockup:hover {
+            transform: translateY(-8px) rotate(2deg);
+        }
+
+        .phone-screen {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            margin-top: 1rem;
+            color: #1c1b1f;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stats-section {
+            background: linear-gradient(145deg, #1c1b1f 0%, #2d2a35 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 800px;
+            margin: 3rem auto 0;
+        }
+
+        .stat-item {
+            padding: 2rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .stat-item h3 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #00e676 0%, #00c853 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer {
+            background: #6750a4;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1.2rem; }
+            .features-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .countdown-display { font-size: 3rem; }
+            .section-title { font-size: 2.2rem; }
+            .feature-card { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="app-logo">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="url(#gradient)" stroke="#fff" stroke-width="2"/>
+                    <path d="M35 45 L45 55 L65 35" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <circle cx="50" cy="25" r="8" fill="#fff"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#4c82f7"/>
+                            <stop offset="100%" style="stop-color:#b74af7"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <h1>YKS Asistanım</h1>
+            <p>YKS'ye hazırlığınızı en etkili şekilde yönetmenin akıllı yolu. Günlük hedeflerden detaylı analizlere, başarıya giden yolda yanınızdayız!</p>
+            
+            <a href="https://play.google.com/store/apps/details?id=com.yks.hazirlik.app" class="download-btn">
+                <span style="margin-right: 12px; font-size: 1.4rem;">📱</span>
+                Google Play'den İndirin
+            </a>
+        </div>
+    </section>
+
+    <!-- Countdown Section -->
+    <section class="countdown-section">
+        <div class="container">
+            <div class="countdown-content">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700;">YKS'ye Kalan Süre</h2>
+                <div class="countdown-display" id="countdown">309 GÜN</div>
+                <p style="font-size: 1.3rem; opacity: 0.9;">Zamanın değerini bil! Her gün bir fırsat 💪</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Güçlü Özellikler</h2>
+            <p class="section-subtitle">YKS hazırlığınızı destekleyen kapsamlı araçlar</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Kontrol Sende</h3>
+                    <p>Günlük hedeflerinden deneme netlerine, çözdüğün soru sayısından bitirdiğin kitaplara kadar tüm ilerlemeni tek bir ekrandan takip et. YKS Asistanım ile her şeye hakim ol!</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Detaylı Analizler</h3>
+                    <p>Deneme netlerinden çalışma saatlerine, çözdüğün soru sayılarından konu ilerlemene kadar tüm verileri detaylı grafiklerle takip et. Güçlü ve zayıf yönlerini keşfet!</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Konu Takibi</h3>
+                    <p>Hangi konuda ne kadar ilerledin? TYT ve AYT konularındaki tamamlanma yüzdelerini anında gör, eksiklerini kolayca belirle ve stratejini optimize et.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📖</div>
+                    <h3>Kitap Yönetimi</h3>
+                    <p>Çözdüğün her kitabı kaydet, her kitaptaki konu tamamlama oranlarını gör. Hangi kitaptan ne kadar ilerlediğini takip ederek YKS hazırlığında tam kontrol sağla.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Günlük Planlama</h3>
+                    <p>Kişiselleştirilebilir çalışma planlayıcın ile ders saatlerini, sınav tarihlerini ve molalarını kolayca düzenle. Her güne planlı başla, verimliliğini artır.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h3>Pomodoro Timer</h3>
+                    <p>Popüler Pomodoro Tekniği ile dikkati dağıtıcı unsurlardan uzaklaş, odaklan ve verimli çalışma seansları oluştur. Belirli aralıklarla verilen molalarla maksimum fayda sağla.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Preview Section -->
+    <section class="app-preview">
+        <div class="container">
+            <h2 class="section-title">Uygulama İçi Görüntüler</h2>
+            <p class="section-subtitle">Modern ve kullanıcı dostu arayüz</p>
+            
+            <div class="preview-grid">
+                <div class="phone-mockup">
+                    <h3 style="margin-bottom: 0.5rem;">📱 Ana Ekran</h3>
+                    <div class="phone-screen">
+                        <div style="background: linear-gradient(135deg, #6750a4, #9c27b0); color: white; padding: 1rem; border-radius: 12px; margin-bottom: 1rem;">
+                            <div style="font-size: 2rem; font-weight: bold;">309 GÜN</div>
+                            <div style="font-size: 0.9rem; opacity: 0.9;">YKS'ye Kalan Süre</div>
+                        </div>
+                        <p style="font-style: italic; color: #6b7280;">"Eğitim en güçlü silahtır"</p>
+                    </div>
+                </div>
+
+                <div class="phone-mockup">
+                    <h3 style="margin-bottom: 0.5rem;">📊 İstatistikler</h3>
+                    <div class="phone-screen">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem;">
+                            <div style="background: #e8eaff; padding: 0.8rem; border-radius: 8px; text-align: center;">
+                                <div style="font-weight: bold; color: #6750a4;">TYT</div>
+                                <div style="font-size: 0.9rem; color: #666;">Aktif</div>
+                            </div>
+                            <div style="background: #f3e5f5; padding: 0.8rem; border-radius: 8px; text-align: center;">
+                                <div style="font-weight: bold; color: #9c27b0;">AYT</div>
+                                <div style="font-size: 0.9rem; color: #666;">Haftalık</div>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                            <div style="font-weight: 600;">📈 TYT Deneme Netlerim</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phone-mockup">
+                    <h3 style="margin-bottom: 0.5rem;">📚 Konu Takibi</h3>
+                    <div class="phone-screen">
+                        <div style="space-y: 0.8rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;">
+                                <span>Türkçe</span>
+                                <span style="color: #6750a4; font-weight: bold;">%34</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;">
+                                <span>Matematik</span>
+                                <span style="color: #00c853; font-weight: bold;">%71</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;">
+                                <span>Geometri</span>
+                                <span style="color: #ff9800; font-weight: bold;">%43</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phone-mockup">
+                    <h3 style="margin-bottom: 0.5rem;">⏰ Pomodoro</h3>
+                    <div class="phone-screen">
+                        <div style="text-align: center;">
+                            <div style="background: linear-gradient(135deg, #6750a4, #9c27b0); color: white; padding: 2rem 1rem; border-radius: 50%; width: 120px; height: 120px; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center;">
+                                <div style="font-size: 1.5rem; font-weight: bold;">25:00</div>
+                            </div>
+                            <p style="color: #6b7280;">Odaklan ve hedefine ulaş! 🎯</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700;">Neden YKS Asistanım?</h2>
+            <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem;">Başarınız için gereken her şey</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p style="font-size: 1.1rem; font-weight: 500;">Ücretsiz</p>
+                </div>
+                <div class="stat-item">
+                    <h3>8+</h3>
+                    <p style="font-size: 1.1rem; font-weight: 500;">Güçlü Özellik</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p style="font-size: 1.1rem; font-weight: 500;">Her Zaman Erişim</p>
+                </div>
+                <div class="stat-item">
+                    <h3>∞</h3>
+                    <p style="font-size: 1.1rem; font-weight: 500;">Sınırsız Motivasyon</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p style="font-size: 1.1rem; font-weight: 500;">&copy; 2025 YKS Asistanım. Başarıya giden yolda yanınızdayız! 🎯</p>
+        </div>
+    </footer>
+
+    <script>
+        // YKS countdown
+        function updateCountdown() {
+            const now = new Date();
+            const yksDate = new Date('2025-06-15');
+            const timeDiff = yksDate - now;
+            const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            
+            const countdownElement = document.getElementById('countdown');
+            if (days > 0) {
+                countdownElement.textContent = `${days} GÜN`;
+            } else {
+                countdownElement.textContent = 'YKS ZAMANINDA!';
+            }
+        }
+
+        updateCountdown();
+
+        // Smooth animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards and phone mockups
+        document.querySelectorAll('.feature-card, .phone-mockup, .stat-item').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(element);
+        });
+
+        // Add stagger effect
+        setTimeout(() => {
+            document.querySelectorAll('.feature-card').forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.1}s`;
+            });
+        }, 100);
+    </script>
+</body>
+</html>
